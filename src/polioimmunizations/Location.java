@@ -11,12 +11,12 @@ package polioimmunizations;
  */
 public class Location {
     private Item dim;
-    private String Value;
+    private int Value;
     
     public Item getDim(){
         return dim;
     }
-    public String getValue(){
+    public int getValue(){
         return Value;
     }
 }

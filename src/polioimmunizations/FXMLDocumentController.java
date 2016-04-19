@@ -11,7 +11,8 @@ import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.chart.*;
 
 /**
  *
@@ -20,13 +21,7 @@ import javafx.scene.control.Label;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private BarChart<String, Number> chart;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,13 +52,30 @@ public class FXMLDocumentController implements Initializable {
         Gson gson = new Gson();
         Dataset dataset = gson.fromJson(str, Dataset.class);
         
+        XYChart.Series<String, Number> immunizations = new XYChart.Series();
+        immunizations.setName("immunizations");
+        chart.setTitle("Polio Immunizations");
+        chart.getXAxis().setLabel("Country");
+        chart.getYAxis().setLabel("% Polio Immunizations");
+        
+        TreeSet<String> countries = new TreeSet();
+        
         System.out.println("Polio Immunizations");
         Location[] locations = dataset.getLocations();
         for(Location location : locations){
             String country = location.getDim().getCountry();
-            String value = location.getValue();
+            int value = location.getValue();
             System.out.println(country + ": " + value + "%");
+            if(country != null && !countries.contains(country)){
+                System.out.println(value);
+                immunizations.getData().add(new XYChart.Data(country, value));
+                countries.add(country);
+            }
         }
+        
+        chart.getData().add(immunizations);
+        
+        
     }    
     
 }
