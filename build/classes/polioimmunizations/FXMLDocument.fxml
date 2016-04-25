@@ -3,11 +3,16 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="polioimmunizations.FXMLDocumentController">
    <children>
-      <BarChart fx:id="chart" barGap="2.0" categoryGap="5.0" legendVisible="false" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BarChart fx:id="chart" barGap="2.0" categoryGap="5.0" layoutY="72.0" legendVisible="false" prefHeight="528.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="72.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -15,5 +20,23 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
+      <Slider id="min" fx:id="min" layoutX="21.0" layoutY="38.0" onKeyReleased="#handleChangeFilter" onMouseDragged="#handleChangeFilter" onMouseReleased="#handleChangeFilter" onScrollFinished="#handleChangeFilter" />
+      <Slider id="max" fx:id="max" layoutX="834.0" layoutY="38.0" onKeyReleased="#handleChangeFilter" onMouseDragged="#handleChangeFilter" onMouseReleased="#handleChangeFilter" value="100.0" AnchorPane.rightAnchor="26.0" />
+      <Label fx:id="minLabel" layoutX="163.0" layoutY="38.0" text="Minimum 0%" />
+      <Label fx:id="maxLabel" layoutX="731.0" layoutY="38.0" text="Maximum 100%" AnchorPane.rightAnchor="169.0" />
+      <MenuBar prefHeight="29.0" prefWidth="1000.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleHelp" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
