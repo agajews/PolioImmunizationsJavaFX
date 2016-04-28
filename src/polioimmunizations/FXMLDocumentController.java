@@ -42,7 +42,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleChangeFilter(MouseEvent event) {
         System.out.println("Clicked slider");
+        max.setMin(0);
+        max.setMax(100);
+        min.setMin(0);
+        min.setMax(100);
+        if(max.getValue() > 5){
+            min.setMax(max.getValue()-5);
+        }else{
+            max.setMin(min.getValue()+5);
+        }
         graphData(min.getValue(), max.getValue());
+        Settings.getInstance().setMin(min.getValue());
+        Settings.getInstance().setMax(max.getValue());
         minLabel.setText("Minimum " + Math.round(min.getValue()) + "%");
         maxLabel.setText("Maximum " + Math.round(max.getValue()) + "%");
     }
@@ -118,7 +129,13 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         data = getData();
         
-        graphData(0, 100);
+        Settings settings = Settings.getInstance();
+        double minVal = settings.getMin();
+        double maxVal = settings.getMax();
+        System.out.println(minVal);
+        System.out.println(maxVal);
+        
+        graphData(minVal, maxVal);
         
         System.out.println(min.getValue());
         

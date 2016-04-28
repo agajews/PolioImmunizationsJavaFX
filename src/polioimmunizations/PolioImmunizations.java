@@ -9,6 +9,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -22,9 +25,14 @@ public class PolioImmunizations extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @Override
+    public void stop() throws Exception{
+        System.out.println("Stopping...");
+        Settings.save();
     }
 
     /**
