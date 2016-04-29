@@ -57,6 +57,7 @@ public class FXMLDocumentController implements Initializable {
         Settings.getInstance().setMin(min.getValue());
         Settings.getInstance().setMax(max.getValue());
         updateSliderLabels();
+        playDing();
     }
     
     @FXML
@@ -71,6 +72,10 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("Clicked help");
         Alert alert = new Alert(AlertType.INFORMATION, "Hi, I'm the developer.", ButtonType.OK);
         alert.showAndWait();
+    }
+    
+    private void playDing(){
+        PolioImmunizations.class.getResource("/ding.wav");
     }
     
     private void updateSliderLabels(){

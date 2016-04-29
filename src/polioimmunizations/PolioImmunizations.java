@@ -26,6 +26,7 @@ public class PolioImmunizations extends Application {
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Polio Immunizations");
         stage.show();
     }
     
