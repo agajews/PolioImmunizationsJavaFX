@@ -8,12 +8,14 @@ package polioimmunizations;
 import com.google.gson.*;
 import java.net.*;
 import java.util.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.chart.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -54,19 +56,26 @@ public class FXMLDocumentController implements Initializable {
         graphData(min.getValue(), max.getValue());
         Settings.getInstance().setMin(min.getValue());
         Settings.getInstance().setMax(max.getValue());
-        minLabel.setText("Minimum " + Math.round(min.getValue()) + "%");
-        maxLabel.setText("Maximum " + Math.round(max.getValue()) + "%");
+        updateSliderLabels();
     }
     
     @FXML
     private void handleClose(Event event) {
         System.out.println("Clicked close");
+        Settings.save();
         System.exit(0);
     }
     
     @FXML
     private void handleHelp(Event event) {
         System.out.println("Clicked help");
+        Alert alert = new Alert(AlertType.INFORMATION, "Hi, I'm the developer.", ButtonType.OK);
+        alert.showAndWait();
+    }
+    
+    private void updateSliderLabels(){
+        minLabel.setText("Minimum " + Math.round(min.getValue()) + "%");
+        maxLabel.setText("Maximum " + Math.round(max.getValue()) + "%");
     }
     
     private Dataset getData(){
@@ -108,14 +117,14 @@ public class FXMLDocumentController implements Initializable {
         
         TreeSet<String> countries = new TreeSet();
         
-        System.out.println("Polio Immunizations");
+        //System.out.println("Polio Immunizations");
         Location[] locations = data.getLocations();
         for(Location location : locations){
             String country = location.getDim().getCountry();
             int value = location.getValue();
             if(country != null && !countries.contains(country)){
                 if (value >= minVal && value <= maxVal){
-                    System.out.println(country + ": " + value + "%");
+                    //System.out.println(country + ": " + value + "%");
                     immunizations.getData().add(new XYChart.Data(country, value));
                     countries.add(country);
                 }
@@ -136,8 +145,9 @@ public class FXMLDocumentController implements Initializable {
         System.out.println(maxVal);
         
         graphData(minVal, maxVal);
-        
-        System.out.println(min.getValue());
+        min.setValue(minVal);
+        max.setValue(maxVal);
+        updateSliderLabels();
         
     }    
     

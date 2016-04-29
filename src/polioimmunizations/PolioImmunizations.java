@@ -30,7 +30,7 @@ public class PolioImmunizations extends Application {
     }
     
     @Override
-    public void stop() throws Exception{
+    public void stop() throws Exception {
         System.out.println("Stopping...");
         Settings.save();
     }

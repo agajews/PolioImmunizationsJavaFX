@@ -20,17 +20,13 @@ public class Settings implements Serializable{
     
     public static Settings getInstance() {
         if(instance == null){
-            try{
-                if(settingsFileExists()) {
-                    System.out.println("Settings file exists");
-                    instance = load();
-                }
-                else {
-                    instance = new Settings();
-                }
+            if(settingsFileExists()) {
+                System.out.println("Settings file exists");
+                instance = load();
+                System.out.println("Saved vals: min=" + instance.getMin() + ", max=" + instance.getMax());
             }
-            catch(IOException e) {
-                System.out.println("IOException");
+            else {
+                instance = new Settings();
             }
         }
         return instance;
@@ -40,27 +36,35 @@ public class Settings implements Serializable{
         return new File(filename).exists();
     }
     
-    public static void save() throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(filename);
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(getInstance());
-        out.close();
-        fileOut.close();
+    public static void save() {
+        try{
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(getInstance());
+            out.close();
+            fileOut.close();
+        }
+        catch(IOException e){
+            System.out.println("IOException");
+        }
         System.out.println("Saved");
     }
     
-    public static Settings load() throws IOException {
-        FileInputStream fileIn = new FileInputStream(filename);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
+    public static Settings load() {
         Settings obj = null;
         try{
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
             obj = (Settings) in.readObject();
+            in.close();
+            fileIn.close();
         }
         catch(ClassNotFoundException e){
             System.out.println("ClassNotFoundException");
         }
-        in.close();
-        fileIn.close();
+        catch(IOException e){
+            System.out.println("IOException");
+        }
         return obj;
     }
     
@@ -72,16 +76,18 @@ public class Settings implements Serializable{
     
     private Settings(){}
     
-    public void setMin(double minVal){
-        minVal = minVal;
+    public void setMin(double val){
+        minVal = val;
+        System.out.println("New min: " + minVal);
     }
     
     public double getMin(){
         return minVal;
     }
     
-    public void setMax(double maxVal){
-        maxVal = maxVal;
+    public void setMax(double val){
+        maxVal = val;
+        System.out.println("New max: " + maxVal);
     }
     
     public double getMax(){
